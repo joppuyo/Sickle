@@ -31,4 +31,18 @@ class SickleSpec extends ObjectBehavior
     {
         $this->shouldThrow(new \Exception('Open Graph title is required'))->duringRender();
     }
+
+    function it_should_sanitize_content()
+    {
+        $description = <<<EOL
+        This description    contains some
+           <h1>html</h1> tags   and
+               other garbage
+        <p>content</p>
+EOL;
+
+        $this->setTitle('A title');
+        $this->setDescription($description);
+        $this->render()->shouldContain('<meta property="og:description" content="This description contains some html tags and other garbage content">');
+    }
 }
