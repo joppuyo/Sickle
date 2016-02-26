@@ -2,6 +2,8 @@
 
 namespace spec\Sickle;
 
+use Sickle\Sickle;
+
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
@@ -11,8 +13,9 @@ class SickleSpec extends ObjectBehavior
     {
         $this->shouldHaveType('Sickle\Sickle');
     }
-    function it_returns_hello()
+    function it_can_set_og_title()
     {
-        $this->hello()->shouldReturn('Hello World');
+        $this->setTitle('A title');
+        $this->render()->shouldContain('<meta property="og:title" content="A title">');
     }
 }
