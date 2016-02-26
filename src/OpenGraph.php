@@ -5,6 +5,8 @@ namespace Sickle;
 class OpenGraph {
     private $title;
     private $description;
+    private $url;
+
     public function setTitle($title)
     {
         $this->title = $title;
@@ -23,5 +25,15 @@ class OpenGraph {
     public function getDescription()
     {
         return $this->description;
+    }
+
+    public function setUrl($url)
+    {
+        $this->url = $url;
+    }
+
+    public function getUrl()
+    {
+        return $this->url;
     }
 }

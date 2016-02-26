@@ -34,6 +34,10 @@ class Sickle {
         $this->openGraph->setDescription($description);
     }
 
+    public function setUrl($url){
+        $this->openGraph->setUrl($url);
+    }
+
     public function render()
     {
         $output = '';
@@ -45,6 +49,13 @@ class Sickle {
             }
             if (!empty($this->openGraph->getDescription())) {
                 $output .= $this->renderTag('og:description', $this->openGraph->getDescription());
+            }
+            if (empty($this->openGraph->getUrl())) {
+                throw new Exception('Open Graph URL is required');
+            } else if (!filter_var($this->openGraph->getUrl(),FILTER_VALIDATE_URL)){
+                throw new Exception('Open Graph URL is malformed. Please provide a valid absolute URL');
+            } else {
+                $output .= $this->renderTag('og:url', $this->openGraph->getUrl());
             }
         }
         return $output;
