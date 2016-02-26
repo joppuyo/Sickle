@@ -1,0 +1,20 @@
+{
+  "name": "joppuyo/sickle",
+  "description": "Social meta tag library for PHP",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Johannes Siipola",
+      "email": "johannes@siipo.la"
+    }
+  ],
+  "require-dev": {
+    "phpspec/phpspec": "~2.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Sickle\\": "src/"
+    }
+  }
+}
