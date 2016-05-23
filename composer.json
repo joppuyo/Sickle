@@ -16,5 +16,8 @@
     "psr-4": {
       "Sickle\\": "src/"
     }
+  },
+  "require": {
+    "henrikbjorn/phpspec-code-coverage": "^2.0"
   }
 }
