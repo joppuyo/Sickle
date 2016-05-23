@@ -1,2 +1,8 @@
 extensions:
     - PhpSpec\Extension\CodeCoverageExtension
+code_coverage:
+  format:
+    - clover
+  output:
+    html: coverage
+    clover: coverage.xml
