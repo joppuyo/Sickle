@@ -89,8 +89,8 @@ class Sickle {
 
         if ($this->twitterCardsEnabled) {
 
-            // Unless especially defined, ff there is no image, use "summary" which does not require image. Else, use
-            // summary large image" to get parity with Open Graph
+            // Unless especially defined, if there is no image, use "summary" which is better suited for content
+            // with no image. Otherwise, use "summary large image" to get better parity with Open Graph
             if (!$this->twitterCards->getCardType()) {
                 if (empty($this->twitterCards->getImage())) {
                     $this->twitterCards->setCardType('summary');
