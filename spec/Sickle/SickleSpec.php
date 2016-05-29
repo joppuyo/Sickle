@@ -85,4 +85,31 @@ EOL;
         $this->render()->shouldNotContain('<meta property="twitter:description" content="A super fine description">');
         $this->render()->shouldNotContain('<meta property="twitter:card" content="summary">');
     }
+
+    function it_should_not_not_set_card_without_site()
+    {
+        $this->setTitle('A title');
+        $this->setUrl('http://example.com');
+        $this->setDescription('A super fine description');
+        $this->enableTwitterCards();
+        $this->shouldThrow(new \Exception('Twitter Cards site must be set'))->duringRender();
+    }
+
+    function it_should_not_not_set_card_without_title()
+    {
+        $this->setUrl('http://example.com');
+        $this->setDescription('A super fine description');
+        $this->disableOpenGraph();
+        $this->enableTwitterCards();
+        $this->shouldThrow(new \Exception('Twitter Cards title must be set'))->duringRender();
+    }
+
+    function it_should_not_not_set_card_without_description()
+    {
+        $this->setTitle('A title');
+        $this->setUrl('http://example.com');
+        $this->disableOpenGraph();
+        $this->enableTwitterCards();
+        $this->shouldThrow(new \Exception('Twitter Cards description must be set'))->duringRender();
+    }
 }

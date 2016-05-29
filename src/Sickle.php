@@ -41,6 +41,26 @@ class Sickle {
         $this->openGraph->setUrl($url);
     }
 
+    public function enableOpenGraph()
+    {
+        $this->openGraphEnabled = true;
+    }
+
+    public function disableOpenGraph()
+    {
+        $this->openGraphEnabled = false;
+    }
+
+    public function enableTwitterCards()
+    {
+        $this->twitterCardsEnabled = true;
+    }
+
+    public function disableTwitterCards()
+    {
+        $this->twitterCardsEnabled = false;
+    }
+
     public function render()
     {
         $output = '';
