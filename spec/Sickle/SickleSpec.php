@@ -61,4 +61,28 @@ EOL;
         $this->setUrl('../test.html');
         $this->shouldThrow(new \Exception('Open Graph URL is malformed. Please provide a valid absolute URL'))->duringRender();
     }
+
+    function it_should_set_twitter_card()
+    {
+        $this->setTitle('A title');
+        $this->setUrl('http://example.com');
+        $this->setDescription('A super fine description');
+        $this->twitterCards->setSite('@example');
+        $this->render()->shouldContain('<meta property="og:title" content="A title">');
+        $this->render()->shouldContain('<meta property="twitter:title" content="A title">');
+        $this->render()->shouldContain('<meta property="og:description" content="A super fine description">');
+        $this->render()->shouldContain('<meta property="twitter:description" content="A super fine description">');
+        $this->render()->shouldContain('<meta property="twitter:site" content="@example">');
+        $this->render()->shouldContain('<meta property="twitter:card" content="summary">');
+    }
+    
+    function it_should_not_set_twitter_card_without_site()
+    {
+        $this->setTitle('A title');
+        $this->setUrl('http://example.com');
+        $this->setDescription('A super fine description');
+        $this->render()->shouldNotContain('<meta property="twitter:title" content="A title">');
+        $this->render()->shouldNotContain('<meta property="twitter:description" content="A super fine description">');
+        $this->render()->shouldNotContain('<meta property="twitter:card" content="summary">');
+    }
 }

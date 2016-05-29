@@ -7,12 +7,13 @@ use PhpSpec\Exception\Exception;
 class Sickle {
 
     public $OpenGraph;
-    private $title;
     private $openGraphEnabled = true;
+    private $twitterCardsEnabled = false;
 
     public function __construct()
     {
         $this->openGraph = new OpenGraph();
+        $this->twitterCards = new TwitterCards();
     }
 
     private function sanitize($string){
@@ -28,10 +29,12 @@ class Sickle {
 
     public function setTitle($title){
         $this->openGraph->setTitle($title);
+        $this->twitterCards->setTitle($title);
     }
 
     public function setDescription($description){
         $this->openGraph->setDescription($description);
+        $this->twitterCards->setDescription($description);
     }
 
     public function setUrl($url){
@@ -57,6 +60,42 @@ class Sickle {
             } else {
                 $output .= $this->renderTag('og:url', $this->openGraph->getUrl());
             }
+        }
+
+        // Enable Twitter Cards automatically when site is set
+        if ($this->twitterCards->getSite()) {
+            $this->twitterCardsEnabled = true;
+        }
+
+        if ($this->twitterCardsEnabled) {
+
+            // Unless especially defined, ff there is no image, use "summary" which does not require image. Else, use
+            // summary large image" to get parity with Open Graph
+            if (!$this->twitterCards->getCardType()) {
+                if (empty($this->twitterCards->getImage())) {
+                    $this->twitterCards->setCardType('summary');
+                } else {
+                    $this->twitterCards->setCardType('summary_large_image');
+                }
+            }
+
+            if (empty($this->twitterCards->getTitle())) {
+                throw new \Exception('Twitter Cards title must be set');
+            }
+
+            if (empty($this->twitterCards->getDescription())) {
+                throw new \Exception('Twitter Cards description must be set');
+            }
+
+            if (empty($this->twitterCards->getSite())) {
+                throw new \Exception('Twitter Cards site must be set');
+            }
+
+            $output .= $this->renderTag('twitter:title', $this->twitterCards->getTitle());
+            $output .= $this->renderTag('twitter:description', $this->twitterCards->getDescription());
+            $output .= $this->renderTag('twitter:site', $this->twitterCards->getSite());
+            $output .= $this->renderTag('twitter:card', $this->twitterCards->getCardType());
+
         }
         return $output;
     }
